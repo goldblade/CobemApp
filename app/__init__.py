@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask
+from flask import Flask, render_template
 #import app.modules.usuario.models
 #import app.modules.usuario.controller
 
@@ -8,7 +8,7 @@ app.config.from_object('config')
 
 @app.route('/')
 def inicio():
-  return "CARREGOU O INICIO DA APLICACAO"
+  return render_template('index.html')
 
 @app.errorhandler(404)
 def not_found(error):
