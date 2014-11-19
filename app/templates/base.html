@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	{% if title %}
+		<title>{{title}} - Flask Skeleton</title>
+	{% else %}
+		<title>Flask Skeleton</title>
+	{% endif %}
+</head>
+<body>
+	{% block content %}{% endblock %}
+</body>
+</html>
