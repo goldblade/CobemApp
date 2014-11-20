@@ -4,3 +4,5 @@ default_settings.py
 **.swp
 .Python
 .flask-skeleton.sublime-projetct
+layout
+layout/*
