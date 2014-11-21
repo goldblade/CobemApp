@@ -38,7 +38,7 @@
 		<header class="navbar" id="header-navbar">
 			<div class="container">
 				<a href="index.html" id="logo" class="navbar-brand">
-					<img src="{{ url_for('static', filename='img/logo.png') }}" alt="" class="normal-logo logo-white"/>
+					<img src="{{ url_for('static', filename='img/logocobemapp.png') }}" alt="" class="normal-logo logo-white"/>
 					<img src="{{ url_for('static', filename='img/logo-black.png') }}" alt="" class="normal-logo logo-black"/>
 					<img src="{{ url_for('static', filename='img/logo-small.png') }}" alt="" class="small-logo hidden-xs hidden-sm hidden"/>
 				</a>
@@ -274,6 +274,11 @@
 		</div>
 		<div id="content-wrapper">
 			{% block content %}{% endblock %}		
+			<footer id="footer-bar" class="row">
+				<p id="footer-copyright" class="col-xs-12">
+					&copy; 2014 <a href="http://www.cobem.org.br/" target="_blank">COBEM</a>. <a href="/teamunifacs">Desenvolvido por Alunos do Curso de SI e CC da Unifacs.</a>
+				</p>
+			</footer>	
 		</div>		
 
 		<script src="{{ url_for('static', filename='js/demo-skin-changer.js') }}"></script>  

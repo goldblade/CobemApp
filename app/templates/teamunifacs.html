@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% set active_page = "index" %}
+{% block content %}
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+						<li><a href="#">Home</a></li>
+						<li class="active"><span>Alunos da Unifacs</span></li>
+					</ol>
+					<h1>Membros do time <small>de Desenvolvimento do sistema</small></h1>
+				</div>
+			</div>
+			<div class="row">
+				{% for img, nome, cargo, cidade, email, telefone in membros %}
+					<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+						<div class="main-box clearfix profile-box-contact">
+							<div class="main-box-body clearfix">
+								<div class="profile-box-header gray-bg clearfix">
+									{% if img %}
+										<img src="{{ url_for('static', filename='img/samples/' + img) }}" alt="" class="profile-img img-responsive"/>
+									{% endif %}
+									<h2>{% if nome %} {{nome}} {% endif %}</h2>
+									<div class="job-position">
+										{% if cargo %} {{cargo}} {% endif %}
+									</div>
+									<ul class="contact-details">
+										{% if cidade %}
+											<li>
+												<i class="fa fa-map-marker"></i> {{cidade}}
+											</li>
+										{% endif %}
+										{% if email %}
+											<li>
+												<i class="fa fa-envelope"></i> {{email}}
+											</li>
+										{% endif %}
+										{% if telefone %}
+											<li>
+												<i class="fa fa-phone"></i> {{telefone}}
+											</li>
+										{% endif %}
+									</ul>
+								</div>							
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
+						<div class="main-box clearfix">
+							<div class="main-box-body clearfix">
+								<h2>&nbsp;</h2>					
+								<div class="alert alert-warning clearfix">
+									<i class="fa fa-warning fa-fw fa-lg"></i>
+									<strong>Atenção!</strong> Não foi encontrado nenhum membro do time no sistema.
+								</div>								
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+								
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}
