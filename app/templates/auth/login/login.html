@@ -46,15 +46,10 @@
 										</div>
 									</header>
 									<div id="login-box-inner">
-										<form role="form" action="">
-											<div class="input-group">
-												<span class="input-group-addon"><i class="fa fa-user"></i></span>
-												<input class="form-control" type="text" placeholder="Usuário" name="usuario">
-											</div>
-											<div class="input-group">
-												<span class="input-group-addon"><i class="fa fa-key"></i></span>
-												<input type="senha" class="form-control" placeholder="Senha">
-											</div>
+										{% from "auth/login/_formhelpers.html" import render_field %}
+										<form role="form" action="" method="post">
+											{{ render_field(form.login, placeholder='Usuário')}}
+                                			{{ render_field(form.senha, placeholder='Senha') }}											
 											<div id="remember-me-wrapper">
 												<div class="row">
 													<div class="col-xs-6">
