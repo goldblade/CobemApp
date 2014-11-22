@@ -65,13 +65,13 @@
 							<div class="drowdown-search">
 								<form role="search">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Search...">
+										<input type="text" class="form-control" placeholder="Pesquisar...">
 										<i class="fa fa-search nav-search-icon"></i>
 									</div>
 								</form>
 							</div>
 						</li>
-						<li class="dropdown hidden-xs">
+						<!-- <li class="dropdown hidden-xs">
 							<a class="btn dropdown-toggle" data-toggle="dropdown">
 								<i class="fa fa-warning"></i>
 								<span class="count">8</span>
@@ -124,8 +124,8 @@
 									</a>
 								</li>
 							</ul>
-						</li>
-						<li class="dropdown hidden-xs">
+						</li> -->
+						<!-- <li class="dropdown hidden-xs">
 							<a class="btn dropdown-toggle" data-toggle="dropdown">
 								<i class="fa fa-envelope-o"></i>
 								<span class="count">16</span>
@@ -187,22 +187,29 @@
 									</a>
 								</li>
 							</ul>
-						</li>
-						<li class="hidden-xs">
+						</li> -->
+						<!-- <li class="hidden-xs">
 							<a class="btn">
 								<i class="fa fa-cog"></i>
 							</a>
-						</li>
+						</li> -->
 						<li class="dropdown profile-dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<img src="{{ url_for('static', filename='img/samples/scarlet-159.png') }}" alt=""/>
-								<span class="hidden-xs">Scarlett Johansson</span> <b class="caret"></b>
+								{% if user.foto %}
+									<!-- @todo ver o dir que vai salvar as fotos do usuario e a view de retorno :D -->
+									<img src="{{ url_for('static', filename=user.foto) }}" alt=""/>
+								{% endif %}
+								<span class="hidden-xs">
+									{% if user.nome %}
+										{{user.nome}}
+									{% endif %}
+								</span> <b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="user-profile.html"><i class="fa fa-user"></i>Profile</a></li>
-								<li><a href="#"><i class="fa fa-cog"></i>Settings</a></li>
-								<li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li>
-								<li><a href="{{ url_for('auth.logout_view') }}"><i class="fa fa-power-off"></i>Logout</a></li>
+								<li><a href="user-profile.html"><i class="fa fa-user"></i>Perfil</a></li>
+								<!-- <li><a href="#"><i class="fa fa-cog"></i>Settings</a></li> -->
+								<!-- <li><a href="#"><i class="fa fa-envelope-o"></i>Messages</a></li> -->
+								<li><a href="{{ url_for('auth.logout_view') }}"><i class="fa fa-power-off"></i>Sair</a></li>
 							</ul>
 						</li>
 						<li class="hidden-xxs">
@@ -221,50 +228,100 @@
 					<section id="col-left" class="col-left-nano">
 					<div id="col-left-inner" class="col-left-nano-content">
 						<div id="user-left-box" class="clearfix hidden-sm hidden-xs">
-							<img alt="" src="{{url_for('static', filename='img/samples/scarlet-159.png')}}"/>
+							{% if user.foto %}
+								<img alt="" src="{{url_for('static', filename=user.foto)}}"/>
+							{% endif %}
 								<div class="user-box">
 									<span class="name">
-										Welcome<br/>
-										Scarlett
+										Seja bem vindo<br/>
+										{% if user.nome %}
+											{{user.nome}}
+										{% endif %}
 									</span>
-									<span class="status">
+									<!-- <span class="status">
 										<i class="fa fa-circle"></i> Online
-									</span>
+									</span> -->
 								</div>
 							</div>
 							<div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">
 								<ul class="nav nav-pills nav-stacked">
-									<li class="active">
-										<a href="index.html">
-											<i class="fa fa-dashboard"></i>
-											<span>Dashboard</span>
-											<span class="label label-info label-circle pull-right">28</span>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="dropdown-toggle">
-											<i class="fa fa-table"></i>
-											<span>Tables</span>
-											<i class="fa fa-chevron-circle-right drop-icon"></i>
-										</a>
-										<ul class="submenu">
-											<li>
-												<a href="tables.html">
-													Simple
-												</a>
-											</li>
-											<li>
-												<a href="tables-advanced.html">
-													Advanced
-												</a>
-											</li>
-											<li>
-												<a href="users.html">
-													Users
-												</a>
-											</li>
-										</ul>
-									</li>
+									{% set navigation_bar = [
+										('/', 'inicio', 'Dashboard', 'fa-dashboard', ''),
+										('#', 'inicio', 'Administração', 'fa-cog', [
+				                            ('/adm/usuarios', 'inicio', 'Usuários', '',''),				                            
+				                        ]),
+									] 
+									%}
+									{% set active_page = active_page|default('index') -%}
+									{% for href, id, caption, icone, sub in navigation_bar %}
+										<li class="{% if id == active_page %} active {% endif %}{% if sub != '' %} dropdown-toggle {% endif %}">                                
+			                                {% if sub != '' %}
+			                                    <a class="dropdown-toggle" href="{{href|e}}">
+			                                    	<i class="fa {{icone}}"></i>
+			                                    	<span>{{caption|e}}</span>
+			                                    	<i class="fa fa-chevron-circle-right drop-icon"></i>
+			                                    </a>
+			                                    <ul class="submenu">
+			                                        {% for subhref, subid, subcaption, subicone, subsub in sub %}
+			                                            {% if subsub != '' %}
+			                                                <li class="dropdown-submenu">
+			                                                    <a tabindex="-1" href="{{subhref|e}}">{{subcaption|e}}</a>
+			                                                    <ul class="dropdown-menu">
+			                                                        {% for subsubhref, subsubid, subsubcaption, subsubsub in subsub %}
+			                                                            <li>
+			                                                                <a href="{{subsubhref|e}}">{{subsubcaption|e}}</a>
+			                                                            </li>
+			                                                        {% endfor %}
+			                                                    </ul>
+			                                                </li>
+			                                            {% else %}
+			                                                <li>
+			                                                    <a href="{{subhref|e}}">{{subcaption|e}}</a>
+			                                                </li>
+			                                            {% endif %}
+			                                        {% endfor %}
+			                                    </ul>
+			                                {% else %}
+			                                    <a href="{{href|e}}">
+			                                    	<i class="fa {{icone}}"></i>
+			                                    	<span>{{caption|e}}</span>
+			                                    </a>
+			                                {% endif %}
+			                            </li>
+									{% endfor %}
+									<!--
+										<li class="active">
+											<a href="index">
+												<i class="fa fa-dashboard"></i>
+												<span>Dashboard</span>
+												<!-- <span class="label label-info label-circle pull-right">28</span> 
+											</a>
+										</li>
+
+										 <li>
+											<a href="#" class="dropdown-toggle">
+												<i class="fa fa-table"></i>
+												<span>Tables</span>
+												<i class="fa fa-chevron-circle-right drop-icon"></i>
+											</a>
+											<ul class="submenu">
+												<li>
+													<a href="tables.html">
+														Simple
+													</a>
+												</li>
+												<li>
+													<a href="tables-advanced.html">
+														Advanced
+													</a>
+												</li>
+												<li>
+													<a href="users.html">
+														Users
+													</a>
+												</li>
+											</ul>
+										</li> -->
 								</ul>
 							</li>
 						</ul>

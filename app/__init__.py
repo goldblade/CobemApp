@@ -19,7 +19,7 @@ db.init_app(app)
 @app.route('/index.html')
 @login_required
 def inicio():
-  return render_template('index.html')
+  return render_template('index.html', user=login.current_user)
 
 
 @app.route('/teamunifacs')
