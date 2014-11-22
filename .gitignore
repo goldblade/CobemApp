@@ -6,3 +6,6 @@ default_settings.py
 .flask-skeleton.sublime-projetct
 layout
 layout/*
+venv
+venv*
+cobemapp.db
