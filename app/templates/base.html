@@ -246,28 +246,33 @@
 							<div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">
 								<ul class="nav nav-pills nav-stacked">
 									{% set navigation_bar = [
-										('/', 'inicio', 'Dashboard', 'fa-dashboard', ''),
+										('/', 'index', 'Dashboard', 'fa-dashboard', ''),
 										('#', 'inicio', 'Administração', 'fa-cog', [
 				                            ('/adm/usuarios', 'inicio', 'Usuários', '',''),				                            
-				                        ]),
+				                        ]),				                       
 									] 
 									%}
-									{% set active_page = active_page|default('index') -%}
+									{% set active_page = active_page|default('index') -%}									
+
 									{% for href, id, caption, icone, sub in navigation_bar %}
-										<li class="{% if id == active_page %} active {% endif %}{% if sub != '' %} dropdown-toggle {% endif %}">                                
-			                                {% if sub != '' %}
-			                                    <a class="dropdown-toggle" href="{{href|e}}">
-			                                    	<i class="fa {{icone}}"></i>
-			                                    	<span>{{caption|e}}</span>
-			                                    	<i class="fa fa-chevron-circle-right drop-icon"></i>
-			                                    </a>
-			                                    <ul class="submenu">
-			                                        {% for subhref, subid, subcaption, subicone, subsub in sub %}
-			                                            {% if subsub != '' %}
-			                                                <li class="dropdown-submenu">
-			                                                    <a tabindex="-1" href="{{subhref|e}}">{{subcaption|e}}</a>
-			                                                    <ul class="dropdown-menu">
-			                                                        {% for subsubhref, subsubid, subsubcaption, subsubsub in subsub %}
+										<li class="{% if id == active_page %} active {% endif %}{% if sub != '' %} {% if not sub[0][4] %} dropdown-toggle {% endif %} {% endif %}
+										">												
+											{% if sub != '' %}
+												<a href="{{href|e}}" class="dropdown-toggle">
+													<i class="fa {{icone}}"></i>
+													<span>{{caption|e}}</span>
+													<i class="fa fa-chevron-circle-right drop-icon"></i>
+												</a>
+												<ul class="submenu">
+													{% for subhref, subid, subcaption, subicone, subsub in sub %}
+														{% if subsub != '' %}															
+			                                                <li>			                                                
+			                                                    <a href="#" class="dropdown-toggle">
+			                                                    	{{subcaption|e}}
+			                                                    	<i class="fa fa-chevron-circle-right drop-icon"></i>
+			                                                    </a>
+			                                                    <ul class="submenu">
+			                                                        {% for subsubhref, subsubid, subsubcaption, subsubicone, subsubsub in subsub %}
 			                                                            <li>
 			                                                                <a href="{{subsubhref|e}}">{{subsubcaption|e}}</a>
 			                                                            </li>
@@ -279,16 +284,16 @@
 			                                                    <a href="{{subhref|e}}">{{subcaption|e}}</a>
 			                                                </li>
 			                                            {% endif %}
-			                                        {% endfor %}
-			                                    </ul>
-			                                {% else %}
+													{% endfor %}
+												</ul>
+											{% else %}
 			                                    <a href="{{href|e}}">
 			                                    	<i class="fa {{icone}}"></i>
 			                                    	<span>{{caption|e}}</span>
 			                                    </a>
 			                                {% endif %}
-			                            </li>
-									{% endfor %}
+										</li>
+									{% endfor %}																		
 									<!--
 										<li class="active">
 											<a href="index">
