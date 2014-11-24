@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+						<li><a href={{url_for('inicio')}}>Home</a></li>
+						<li class="active"><span>Usuários</span></li>
+					</ol>
+					<div class="clearfix">
+						<h1 class="pull-left">Usuários</h1>
+						<div class="pull-right top-page-ui">
+							<a href="#" class="btn btn-primary pull-right">
+								<i class="fa fa-plus-circle fa-lg"></i> Add usuário
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>			
+			<div class="row">
+				<div class="col-lg-12">
+										<div class="main-box no-header clearfix">
+											<div class="main-box-body clearfix">
+												<div class="table-responsive">
+													<table class="table user-list table-hover">
+														<thead>
+															<tr>
+																<th><span>Usuário</span></th>
+																<th><span>Criado em</span></th>
+																<th class="text-center"><span>Status</span></th>
+																<th><span>Email</span></th>
+																<th>&nbsp;</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>
+																	<img src="{{ url_for('static', filename='img/samples/user-profile-1.png')}}" alt=""/>
+																	<a href="#" class="user-link">Mila Kunis</a>
+																	<span class="user-subhead">Admin</span>
+																</td>
+																<td>
+																	2013/08/08
+																</td>
+																<td class="text-center">
+																	<span class="label label-default">Inactive</span>
+																</td>
+																<td>
+																	<a href="#"><span class="__cf_email__" data-cfemail="f994909598b9928c97908ad79a9694">[email&nbsp;protected]</span><script type="text/javascript">
+																		/* <![CDATA[ */
+																		(function(){try{var s,a,i,j,r,c,l,b=document.getElementsByTagName("script");l=b[b.length-1].previousSibling;a=l.getAttribute('data-cfemail');if(a){s='';r=parseInt(a.substr(0,2),16);for(j=2;a.length-j;j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}s=document.createTextNode(s);l.parentNode.replaceChild(s,l);}}catch(e){}})();
+																		/* ]]> */
+																	</script></a>
+																</td>
+																<td style="width: 20%;">
+																	<a href="#" class="table-link">
+																		<span class="fa-stack">
+																		<i class="fa fa-square fa-stack-2x"></i>
+																		<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+																		</span>
+																	</a>
+																	<a href="#" class="table-link">
+																		<span class="fa-stack">
+																		<i class="fa fa-square fa-stack-2x"></i>
+																		<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+																		</span>
+																	</a>
+																	<a href="#" class="table-link danger">
+																		<span class="fa-stack">
+																		<i class="fa fa-square fa-stack-2x"></i>
+																		<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+																		</span>
+																	</a>
+																</td>
+															</tr>															
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>			
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}

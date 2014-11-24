@@ -44,13 +44,23 @@ def team_unifacs_view():
 def install():
 	db.drop_all()
 	db.create_all()	
-	from app.modules.adm.models.usuario import Usuario
+	from app.modules.adm.models.usuario import Usuario, Modulo
 	usuario = Usuario()
 	usuario.nome = 'admin'
 	usuario.login = 'admin'
 	usuario.set_senha('admin')
 	db.session.add(usuario)
+
+	modulos = [
+		'adm',
+	]
+	for m in modulos:
+		mod = Modulo()
+		mod.nome = m
+		db.session.add(mod)
+
 	db.session.commit()
+
 	return "install..."
 
 @app.errorhandler(404)

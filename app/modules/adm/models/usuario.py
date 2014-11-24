@@ -43,6 +43,11 @@ class Usuario(db.Model):
 	def __unicode__(self):
 		return self.login
 
+class Modulo(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	nome = db.Column(db.String(20))
+	ativo = db.Column(db.SmallInteger, default = 1)
+
 '''class Perfil(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	nome = db.Column(db.String(255))
