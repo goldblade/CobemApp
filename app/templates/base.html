@@ -248,7 +248,8 @@
 									{% set navigation_bar = [
 										('/', 'index', 'Dashboard', 'fa-dashboard', ''),
 										('#', 'adm', 'Administração', 'fa-cog', [
-				                            ('/adm/usuario', 'adm', 'Usuários', '',''),
+				                            ('/adm/usuario', 'admusuarios', 'Usuários', '',''),
+				                            ('/adm/funcionalidade', 'admfuncionalidades', 'Funcionalidades', '', ''),
 				                        ]),				                       
 									] 
 									%}
@@ -264,7 +265,7 @@
 												<ul class="submenu">
 													{% for subhref, subid, subcaption, subicone, subsub in sub %}
 														{% if subsub != '' %}															
-			                                                <li class="{% if id == active_page %} active {% endif %}">			                                                
+			                                                <li>			                                                
 			                                                    <a href="#" class="dropdown-toggle">
 			                                                    	{{subcaption|e}}
 			                                                    	<i class="fa fa-chevron-circle-right drop-icon"></i>
@@ -278,7 +279,7 @@
 			                                                    </ul>
 			                                                </li>
 			                                            {% else %}
-			                                                <li class="{% if id == active_page %} active {% endif %}">
+			                                                <li>
 			                                                    <a href="{{subhref|e}}">{{subcaption|e}}</a>
 			                                                </li>
 			                                            {% endif %}
