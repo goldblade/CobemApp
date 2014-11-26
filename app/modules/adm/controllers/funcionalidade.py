@@ -6,7 +6,10 @@ from flask.ext.login import login_required
 from flask.ext import login
 from app.models import paginate
 from app.modules.adm.models.usuario import Funcionalidade
-
+from flask.ext.wtf import Form
+#from wtforms.ext.appengine.db import model_form
+from wtforms.ext.sqlalchemy.orm import model_form
+from app import db
 
 @mod.route('/funcionalidade', defaults={'page' : 1})
 @mod.route('/funcionalidade/listar')
@@ -20,4 +23,9 @@ def funcionalidade_listar_view(page):
 @mod.route('/funcionalidade/adicionar')
 @login_required
 def funcionalidade_adicionar_view():
-	return render_template('adm/funcionalidade/adicionar.html', active_page='adm', user=login.current_user)
+	#MyForm = model_form(Funcionalidade, db_session=db, base_class=Form)
+	MyForm = model_form(Funcionalidade, db_session=db)
+	#model = Funcionalidade.query
+	#form = MyForm(request.form, model)
+	form = MyForm(request.form)
+	return render_template('adm/funcionalidade/adicionar.html', active_page='adm', user=login.current_user, form=form)

@@ -1,4 +1,11 @@
-{% extends "base.html" %}
-{% block content %}
-FORM DE ADD
+{% extends "adicionar.html" %}
+{% block breadcrumb %}
+	<li><a href="{{ url_for('.funcionalidade_listar_view') }}">Funcionalidades</a></li>
+	<li class="active"><span>ADICIONAR FUNCIONALIDADE</span></li>
 {% endblock %}
+
+{% block titulo %}						
+	Funcionalidades <small>do Sistema</small>
+{% endblock %}
+
+{% block list_header %}Adicionar{% endblock %}

@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block titulo %}						
-	<h1>Funcionalidades <small>do Sistema</small></h1>
+	Funcionalidades <small>do Sistema</small>
 {% endblock %}
 
 {% block list_header %}
@@ -55,7 +55,16 @@
 					</span>
 				</a>
 			</td>
-		</tr>				
+		</tr>
+		{% else %}
+			<tr>
+				<td colspan="3">
+					<div class="alert alert-info">
+						<i class="fa fa-info-circle fa-fw fa-lg"></i>
+						<strong>Nenhuma funcionalidade cadastrada!</strong>
+					</div>
+				</td>
+			</tr>				
 		{% endfor %}						
 	{% endblock %}
 {% endblock %}

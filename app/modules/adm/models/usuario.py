@@ -53,7 +53,7 @@ class Funcionalidade(db.Model):
 	nome = db.Column(db.String(20))
 	nome_controller = db.Column(db.String(20))
 	modulo_id = db.Column(db.Integer, db.ForeignKey('modulo.id'))	
-	modulo = db.relationship("Modulo", backref='funcionalidade', order_by=id)
+	modulo = db.relationship("Modulo", backref='funcionalidade', order_by=id)	
 
 
 class Perfil(db.Model):
