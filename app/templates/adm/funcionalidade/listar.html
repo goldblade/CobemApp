@@ -1,0 +1,92 @@
+{% extends "listar.html" %}
+{% block breadcrumb %}
+	<li class="active"><span>Funcionalidades</span></li>
+{% endblock %}
+
+{% block titulo %}						
+	<h1>Funcionalidades <small>do Sistema</small></h1>
+{% endblock %}
+
+{% block list_header %}
+	<!-- <h2 class="pull-left">Products</h2> -->
+	<div class="filter-block pull-right">
+		<div class="form-group pull-left">
+			<input type="text" class="form-control" placeholder="Pesquisar...">
+			<i class="fa fa-search search-icon"></i>
+		</div>
+		<a href="{{ url_for('.funcionalidade_adicionar_view') }}" class="btn btn-primary pull-right">
+			<i class="fa fa-plus-circle fa-lg"></i> Adicionar Funcionalidade
+		</a>
+	</div>
+{% endblock %}
+
+{% block tabela %}
+	{% block cabecalho %}
+		<th><a href="#"><span>Nome</span></a></th>
+		<th class="text-right"><a href="#" class="asc"><span>Módulo</span></a></th>											
+		<th>&nbsp;</th>
+	{% endblock %}
+	{% block body %}
+		{% for f in dados %} 
+		<tr>
+			<td>
+				{{f.nome}}
+			</td>
+			<td class="text-right">
+				{{f.modulo_id}}
+			</td>											
+			<td style="width: 15%;">
+				<a href="#" class="table-link">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+				<a href="#" class="table-link">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+				<a href="#" class="table-link danger">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+			</td>
+		</tr>				
+		{% endfor %}						
+	{% endblock %}
+{% endblock %}
+
+{% block paginacao %}
+	{% if max_page > 1 %} 
+		<li {% if page == 1 %}class="active"{% endif %}>
+            <a href="{{ url_for('.funcionalidade_listar_view', page=1) }}">« Primeira</a>
+        </li>
+        {% for p in pages %}
+        	<li {% if page == p %}class="active"{% endif %}>                                
+                <a href="{{ url_for('.funcionalidade_listar_view', page=p) }}">{{ p }}</a>
+            </li>
+        {% endfor %}
+        	<li {% if page == max_page %}class="active"{% endif %}>
+            	<a href="{{ url_for('.funcionalidade_listar_view', page=max_page) }}">Última »</a>
+           </li>
+    {% endif %}
+	<!-- <li>
+		<a href="#"><i class="fa fa-chevron-left"></i></a>
+	</li>
+	<li>
+		<a href="#">1</a>
+	</li>
+	<li>
+		<a href="#">2</a>
+	</li>
+	<li>
+		<a href="#">3</a>
+	</li>
+	<li><a href="#">4</a></li>
+	<li><a href="#">5</a></li>
+	<li><a href="#"><i class="fa fa-chevron-right"></i></a></li> -->
+{% endblock %}
