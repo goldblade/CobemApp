@@ -23,7 +23,7 @@ Ferramenta que fornece subsídios para à Gestão Escolar da Creche **COBEM**.
 
 * Python 2.7
 * Pip
-* Virtualenv
+* Virtualenv (opcional), caso queira ter um ambiente limpo
 
 Guia de Instalação do python no windows:
 

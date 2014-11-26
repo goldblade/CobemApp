@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">						
+							<li><a href="{{ url_for('inicio') }}">Home</a></li>
+							{% block breadcrumb %}
+								
+							{% endblock %}
+						</ol>
+					{% block titulo %}						
+						
+					{% endblock %}
+				</div>
+			</div>			
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="main-box clearfix">
+						<header class="main-box-header clearfix">
+							{% block list_header %}
+								
+							{% endblock %}
+						</header>
+						<tbody>
+						<div class="main-box-body clearfix">
+							<div class="table-responsive">
+								<table class="table">
+									{% block tabela %}
+										<thead>
+											<tr>
+												{% block cabecalho %}
+												{% endblock %}
+											</tr>
+										</thead>
+										<tbody>
+											{% block body %}
+											{% endblock %}
+										</tbody>
+									{% endblock %}
+								</table>
+							</div>
+							<ul class="pagination pull-right">
+								{% block paginacao %}
+								{% endblock %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+{% endblock %}
