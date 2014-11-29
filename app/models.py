@@ -11,10 +11,10 @@ def paginate(query, page, instance, limit):
 	#ppp = app.config['POSTS_PER_PAGE']
 	num = 8 / 2
 	ppp = 8
-	try:
-		if isinstance(query[0], instance):
+	try:		
+		if isinstance(query[0], instance):			
 			num = limit / 2
-			ppp = limit
+			ppp = limit			
 							
 	except IndexError:
 		print 'opsss ouve um erro'	

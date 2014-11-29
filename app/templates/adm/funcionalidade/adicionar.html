@@ -9,3 +9,9 @@
 {% endblock %}
 
 {% block list_header %}Adicionar{% endblock %}
+
+{% block fields %}
+{% from "_formhelpers.html" import render_field %}
+{{ render_field(form.modulo, placeholder='Módulo')}}
+{{ render_field(form.nome, placeholder='Nome') }}	
+{% endblock %}

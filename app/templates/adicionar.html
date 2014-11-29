@@ -17,16 +17,11 @@
 						<header class="main-box-header clearfix">
 							<h2>{% block list_header %}{% endblock %}</h2>
 						</header>
-						<div class="main-box-body clearfix">
-							<form role="form" action={% block form_action %}{% endblock %}>
-								{{form.nome.label}}{{ form.nome }}
-								{{form.nome_controller.label}}{{ form.nome_controller}}		
-								{{form.modulo.label}}	
-								<div class="form-group">
-									<label for="exampleInputEmail1">Email address</label>
-									<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-								</div>
-								<button type="submit" class="btn btn-success">Adicionar</button>	
+						<div class="main-box-body clearfix">							
+							<form role="form" action="{% block form_action %}{% endblock %}" method="POST">	
+								{% block fields %}								
+								{% endblock %}
+								<button type="submit" class="btn btn-success">Adicionar</button>
 							</form>
 						</div>
 					</div>

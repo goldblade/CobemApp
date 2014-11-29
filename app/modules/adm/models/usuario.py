@@ -47,6 +47,8 @@ class Modulo(db.Model):
 	nome = db.Column(db.String(20))
 	ativo = db.Column(db.Boolean, default = True)
 	funcionalidade_child = db.relationship("Funcionalidade", cascade="all,delete", backref="postparent")
+	def __unicode__(self):
+		return self.nome
 
 class Funcionalidade(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
