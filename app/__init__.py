@@ -38,7 +38,7 @@ def team_unifacs_view():
 		('robert-300.jpg', u'Eduardo Júnior', u'Analista e Desenvolvedor', u'Irecê - BA', u'ej@eduardojunior.com', 
 			'(74) 9932-6161'),
 	]		
-	return render_template('teamunifacs.html', membros=membros)
+	return render_template('teamunifacs.html', membros=membros, user=login.current_user)
 
 @app.route('/install')
 def install():
