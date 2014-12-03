@@ -35,11 +35,33 @@ def funcionalidade_adicionar_view():
 			db.session.add(f)
 			db.session.commit()
 		except:
-			flash(u'Não foi possível inserir a funcionalidade')
+			flash(u'Não foi possível inserir a funcionalidade', 'danger')
 		flash(u'Funcionalidade inserida com sucesso!', 'success')
 		return redirect(url_for('.funcionalidade_listar_view'))
 	return render_template('adm/funcionalidade/adicionar.html', active_page='adm', user=login.current_user, form=form)
 
+@mod.route('/funcionalidade/editar/id/<int:id>', methods=["GET", "POST"])
+@login_required
+def funcionalidade_editar_view(id):
+	try:
+		f = Funcionalidade.query.get(id)
+	except:
+		flash(u'Funcionalidade não encontrada', 'danger')
+		return redirect(url_for('.funcionalidade_listar_view'))
+	form = FuncionalidadeForm(request.form, obj=f)
+	if request.method == 'POST' and form.validate():
+		f.nome = form.nome.data
+		f.nome_controller = form.nome.data.lower()
+		f.modulo_id = form.modulo.data.id
+		try:
+			db.session.add(f)
+			db.session.commit()
+		except:
+			flash(u'Não foi possível alterar a funcionalidade', 'danger')
+		flash(u'Funcionalidade foi alterada com sucesso!', 'success')
+		return redirect(url_for('.funcionalidade_listar_view'))
+
+	return render_template('adm/funcionalidade/editar.html', active_page='adm', user=login.current_user, form=form)
 
 @mod.route('/funcionalidade/deletar/id/<int:id>', methods=["GET"])
 @login_required
@@ -53,3 +75,13 @@ def funcionalidade_deletar_view(id):
 		flash(u'Registro não encontrado no sistema', 'danger')
 
 	return redirect(url_for('.funcionalidade_listar_view'))
+
+@mod.route('/funcionalidade/exibir/id/<int:id>', methods=["GET"])
+@login_required
+def funcionalidade_exibir_view(id):
+	try:
+		f = Funcionalidade.query.get(id)
+	except:
+		flash(u'Funcionalidade não encontrada!', 'danger')
+		return redirect(url_for('.funcionalidade_listar_view'))
+	return render_template('adm/funcionalidade/exibir.html', active_page='adm', user=login.current_user, data=f)

@@ -9,3 +9,6 @@ layout/*
 venv
 venv*
 cobemapp.db
+.idea
+.idea*
+.idea/*
