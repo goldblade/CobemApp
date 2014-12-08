@@ -27,13 +27,16 @@
 	<link type="image/x-icon" href="{{ url_for('static', filename='favicon.png') }}" rel="shortcut icon"/>
 	 
 	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>
+	{% block estilos %}
+	{% endblock %}
 	<!--[if lt IE 9]>
 			<script src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
 			<script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
-		<![endif]-->
-
+		<![endif]-->	
 </head>
 <body>
+	{% block modal %}
+	{% endblock %}
 	<div id="theme-wrapper">
 		<header class="navbar" id="header-navbar">
 			<div class="container">
@@ -341,7 +344,8 @@
 				</p>
 			</footer>	
 		</div>		
-
+		
+		{% block modaloverlay %}{% endblock %}
 		<script src="{{ url_for('static', filename='js/demo-skin-changer.js') }}"></script>  
 		<script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
@@ -530,5 +534,7 @@
 		    			
 		});
 		</script>	
+		{% block scripts %}{% endblock %}
+	}
 </body>
 </html>

@@ -18,7 +18,6 @@ from app import db
 @login_required
 def funcionalidade_listar_view(page):
 	funcionalidades = Funcionalidade.query.order_by('nome ASC').all()
-	print funcionalidades	
 	res = paginate(funcionalidades, page, Funcionalidade, 8)
 	return render_template('adm/funcionalidade/listar.html', active_page='adm', user=login.current_user, **res)
 
@@ -85,3 +84,15 @@ def funcionalidade_exibir_view(id):
 		flash(u'Funcionalidade não encontrada!', 'danger')
 		return redirect(url_for('.funcionalidade_listar_view'))
 	return render_template('adm/funcionalidade/exibir.html', active_page='adm', user=login.current_user, data=f)
+
+@mod.route('/funcionalidade/pesquisar', methods=["POST"])
+@login_required
+def funcionalidade_pesquisar_view():
+	q = request.form['q']	
+	if request.method == 'POST':		
+		if q != '':
+			busca_funcionalidade = Funcionalidade.query.filter(Funcionalidade.nome.like('%' + q + '%')).all()
+		else:
+			busca_funcionalidade = Funcionalidade.query.order_by('nome ASC').all()
+
+	return render_template('adm/funcionalidade/pesquisar.html', dados=busca_funcionalidade)

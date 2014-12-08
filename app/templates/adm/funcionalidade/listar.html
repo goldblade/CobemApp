@@ -7,12 +7,50 @@
 	Funcionalidades <small>do Sistema</small>
 {% endblock %}
 
+{% block scripts %}	
+	{{ super() }}
+	<script type="text/javascript">
+	$( document ).ready(function() {
+    	//$("table>tbody").html('<tr><td>aaaa</td></tr>')
+    	$(".pesquisar").submit(function(e){
+    		e.preventDefault();    		
+    		//var postData = $(this).serialize();
+            var formUrl = $(this).attr('action');                        
+            var query = $(".pesquisar>input:text[name=query]").val();
+            // if ( query == "") {
+            // 	alert('opss! Você esqueceu de digitar algo na pesquisa');
+            // } else {            	
+	            $.ajax({
+	                type : "post",
+	                data : { q:query },
+	                url : formUrl,
+	                success : function(result){
+	                    $("table>tbody").html(result);
+	                },
+	                beforeSend : function(){
+	                    $("table>tbody").html('');
+	                    $("table>tbody").hide();	                    
+	                    $(".loading").show();
+	                }, 
+	                complete : function(msg){                    
+	                    $(".loading").hide();
+	                    $("table>tbody").show();                    
+	                } 
+	            })
+            // }
+    	})
+	});	
+	</script>
+{% endblock %}
+
 {% block list_header %}
 	<!-- <h2 class="pull-left">Products</h2> -->
 	<div class="filter-block pull-right">
 		<div class="form-group pull-left">
-			<input type="text" class="form-control" placeholder="Pesquisar...">
-			<i class="fa fa-search search-icon"></i>
+			<form action="{{ url_for('.funcionalidade_pesquisar_view') }}" class="pesquisar" method="post">
+				<input name="query" type="text" class="form-control" placeholder="Pesquisar...">
+				<i class="fa fa-search search-icon"></i>
+			</form>
 		</div>
 		<a href="{{ url_for('.funcionalidade_adicionar_view') }}" class="btn btn-primary pull-right">
 			<i class="fa fa-plus-circle fa-lg"></i> Adicionar Funcionalidade
@@ -20,7 +58,7 @@
 	</div>
 {% endblock %}
 
-{% block tabela %}
+
 	{% block cabecalho %}
 		<th><a href="#"><span>Nome</span></a></th>
 		<th class="text-right"><a href="#" class="asc"><span>Módulo</span></a></th>											
@@ -48,12 +86,12 @@
 						<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
 					</span>
 				</a>
-				<a href="{{ url_for('.funcionalidade_deletar_view', id=f.id) }}" class="table-link danger">
+				<a href="{{ url_for('.funcionalidade_deletar_view', id=f.id) }}" class=" table-link danger delete">
 					<span class="fa-stack">
 						<i class="fa fa-square fa-stack-2x"></i>
 						<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
 					</span>
-				</a>
+				</a>				
 			</td>
 		</tr>
 		{% else %}
@@ -67,7 +105,7 @@
 			</tr>				
 		{% endfor %}						
 	{% endblock %}
-{% endblock %}
+
 
 {% block paginacao %}
 	{% if max_page > 1 %} 
