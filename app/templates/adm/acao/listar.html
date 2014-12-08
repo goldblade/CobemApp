@@ -1,0 +1,86 @@
+{% extends "listar.html" %}
+{% block breadcrumb %}
+	<li class="active"><span>AÇÕES</span></li>
+{% endblock %}
+
+{% block titulo %}						
+	Ações <small>do Sistema</small>
+{% endblock %}
+
+{% block list_header %}
+	<!-- <h2 class="pull-left">Products</h2> -->
+	<div class="filter-block pull-right">
+		<div class="form-group pull-left">
+			<input type="text" class="form-control" placeholder="Pesquisar...">
+			<i class="fa fa-search search-icon"></i>
+		</div>
+		<a href="{{ url_for('.funcionalidade_adicionar_view') }}" class="btn btn-primary pull-right">
+			<i class="fa fa-plus-circle fa-lg"></i> Adicionar Ação
+		</a>
+	</div>
+{% endblock %}
+
+{% block tabela %}
+	{% block cabecalho %}
+		<th><a href="#"><span>Perfil</span></a></th>
+		<th class="text-right"><a href="#" class="asc"><span>Funcionalidade</span></a></th>											
+		<th>&nbsp;</th>
+	{% endblock %}
+	{% block body %}
+		{% for f in dados %} 
+		<tr>
+			<td>
+				{{ f.perfil }}
+			</td>
+			<td class="text-right">
+				{{ f.funcionalidade }}
+			</td>											
+			<td style="width: 15%;">
+				<a href="{{ url_for('.funcionalidade_exibir_view', id=f.id) }}" class="table-link">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+				<a href="{{ url_for('.funcionalidade_editar_view', id=f.id) }}" class="table-link">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+				<a href="{{ url_for('.funcionalidade_deletar_view', id=f.id) }}" class="table-link danger">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+			</td>
+		</tr>
+		{% else %}
+			<tr>
+				<td colspan="3">
+					<div class="alert alert-info">
+						<i class="fa fa-info-circle fa-fw fa-lg"></i>
+						<strong>Nenhuma funcionalidade cadastrada!</strong>
+					</div>
+				</td>
+			</tr>				
+		{% endfor %}						
+	{% endblock %}
+{% endblock %}
+
+{% block paginacao %}
+	{% if max_page > 1 %} 
+		<li {% if page == 1 %}class="active"{% endif %}>
+            <a href="{{ url_for('.funcionalidade_listar_view', page=1) }}">« Primeira</a>
+        </li>
+        {% for p in pages %}
+        	<li {% if page == p %}class="active"{% endif %}>                                
+                <a href="{{ url_for('.funcionalidade_listar_view', page=p) }}">{{ p }}</a>
+            </li>
+        {% endfor %}
+        	<li {% if page == max_page %}class="active"{% endif %}>
+            	<a href="{{ url_for('.funcionalidade_listar_view', page=max_page) }}">Última »</a>
+           </li>
+    {% endif %}
+{% endblock %}

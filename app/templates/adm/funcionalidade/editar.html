@@ -1,0 +1,18 @@
+{% extends "editar.html" %}
+
+{% block breadcrumb %}
+	<li><a href="{{ url_for('.funcionalidade_listar_view') }}">Funcionalidades</a></li>
+	<li class="active"><span>EDITAR FUNCIONALIDADE</span></li>
+{% endblock %}
+
+{% block titulo %}
+	Funcionalidades <small>do Sistema</small>
+{% endblock %}
+
+{% block list_header %}Editar{% endblock %}
+
+{% block fields %}
+	{% from "_formhelpers.html" import render_field %}
+	{{ render_field(form.modulo, placeholder='Módulo')}}
+	{{ render_field(form.nome, placeholder='Nome') }}
+{% endblock %}

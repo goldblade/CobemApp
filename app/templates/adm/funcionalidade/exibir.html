@@ -1,0 +1,19 @@
+{% extends "exibir.html" %}
+{% block breadcrumb %}
+    <li><a href="{{ url_for('.funcionalidade_listar_view') }}">Funcionalidade</a></li>
+	<li class="active"><span>{{data.nome}}</span></li>
+{% endblock %}
+{% block titulo %}
+	{{data.nome}}
+{% endblock %}
+{% block subtitulo %}
+	Funcionalidade no. {{data.id}}
+{% endblock %}
+{% block acoes %}
+	<a href="{{ url_for('.funcionalidade_adicionar_view') }}" class="btn btn-primary pull-right">
+		<i class="fa fa-plus-circle fa-lg"></i> Nova Funcionalidade
+	</a>
+	<a href="{{ url_for('.funcionalidade_editar_view', id=data.id) }}" class="btn btn-primary pull-right">
+		<i class="fa fa-pencil fa-lg"></i> Editar Funcionalidade
+	</a>
+{% endblock %}
