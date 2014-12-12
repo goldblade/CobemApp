@@ -23,14 +23,8 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="row">
-							<p><b>Funcionalidade:</b></p>
-							<p>{{data.nome}}</p>
-							<p><b>Modulo:</b></p>
-							<p>{{data.modulo}}</p>
-							<p><b>Controlador</b></p>
-							<p>{{data.nome_controller}}</p>
-						</div>												
+						{% block conteudo %}
+						{% endblock %}
 						<!-- <div class="clearfix">
 							<a href="#" class="btn btn-success pull-right">
 								<i class="fa fa-mail-forward fa-lg"></i> Send invoice

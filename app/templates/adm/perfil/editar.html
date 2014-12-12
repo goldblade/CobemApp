@@ -1,0 +1,18 @@
+{% extends "editar.html" %}
+
+{% block breadcrumb %}
+	<li><a href="{{ url_for('.perfil_listar_view') }}">Perfis</a></li>
+	<li class="active"><span>EDITAR PERFIL</span></li>
+{% endblock %}
+
+{% block titulo %}
+	Perfis <small>do Sistema</small>
+{% endblock %}
+
+{% block list_header %}Editar{% endblock %}
+
+{% block fields %}
+	{% from "_formhelpers.html" import render_field %}
+	{{ render_field(form.nome, placeholder='Nome do Perfil')}}	
+	{{ render_field(form.ativo, placeholder='Ativo') }}
+{% endblock %}

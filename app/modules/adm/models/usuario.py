@@ -55,13 +55,17 @@ class Funcionalidade(db.Model):
 	nome = db.Column(db.String(20))
 	nome_controller = db.Column(db.String(20))
 	modulo_id = db.Column(db.Integer, db.ForeignKey('modulo.id'))	
-	modulo = db.relationship("Modulo", backref='funcionalidade', order_by=id)	
+	modulo = db.relationship("Modulo", backref='funcionalidade', order_by=id)
+	def __unicode__(self):
+		return self.nome
 
 
 class Perfil(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	nome = db.Column(db.String(255))	
 	ativo = db.Column(db.Boolean, default = True)
+	def __unicode__(self):
+		return self.nome
 
 class Acao(db.Model):
 	id = db.Column(db.Integer, primary_key=True)

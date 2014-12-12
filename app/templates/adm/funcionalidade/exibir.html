@@ -17,3 +17,13 @@
 		<i class="fa fa-pencil fa-lg"></i> Editar Funcionalidade
 	</a>
 {% endblock %}
+{% block conteudo %}
+	<div class="row">
+		<p><b>Funcionalidade:</b></p>
+		<p>{{data.nome}}</p>
+		<p><b>Modulo:</b></p>
+		<p>{{data.modulo}}</p>
+		<p><b>Controlador</b></p>
+		<p>{{data.nome_controller}}</p>
+	</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "editar.html" %}
+
+{% block breadcrumb %}
+	<li><a href="{{ url_for('.acao_listar_view') }}">Ações</a></li>
+	<li class="active"><span>EDITAR AÇÃO</span></li>
+{% endblock %}
+
+{% block titulo %}
+	Ações <small>do Sistema</small>
+{% endblock %}
+
+{% block list_header %}Editar{% endblock %}
+
+{% block fields %}
+	{% from "_formhelpers.html" import render_field %}
+	{{ render_field(form.perfil, placeholder='Perfil')}}
+	{{ render_field(form.funcionalidade, placeholder='Funcionalidade') }}
+	{{ render_field(form.listar, placeholder='Listar') }}
+	{{ render_field(form.adicionar, placeholder='Adicionar') }}
+	{{ render_field(form.editar, placeholder='Editar') }}
+	{{ render_field(form.apagar, placeholder='Apagar') }}
+{% endblock %}

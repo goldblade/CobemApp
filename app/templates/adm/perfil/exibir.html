@@ -1,0 +1,33 @@
+{% extends "exibir.html" %}
+{% block breadcrumb %}
+    <li><a href="{{ url_for('.perfil_listar_view') }}">Perfis</a></li>
+	<li class="active"><span>{{data.nome}}</span></li>
+{% endblock %}
+{% block titulo %}
+	{{data.nome}}
+{% endblock %}
+{% block subtitulo %}
+	Perfil no. {{data.id}}
+{% endblock %}
+{% block acoes %}
+	<a href="{{ url_for('.perfil_adicionar_view') }}" class="btn btn-primary pull-right">
+		<i class="fa fa-plus-circle fa-lg"></i> Novo Perfil
+	</a>
+	<a href="{{ url_for('.perfil_editar_view', id=data.id) }}" class="btn btn-primary pull-right">
+		<i class="fa fa-pencil fa-lg"></i> Editar Perfil
+	</a>
+{% endblock %}
+{% block conteudo %}
+	<div class="row">
+		<p><b>Perfil:</b></p>
+		<p>{{data.nome}}</p>
+		<p><b>Ativo:</b></p>
+		<p>
+			{% if data.ativo %}
+				Sim
+			{% else %}
+				Não
+			{% endif %}
+		</p>		
+	</div>
+{% endblock %}
