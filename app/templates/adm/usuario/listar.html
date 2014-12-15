@@ -1,87 +1,146 @@
-{% extends "base.html" %}
-{% block content %}
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="row">
-				<div class="col-lg-12">
-					<ol class="breadcrumb">
-						<li><a href={{url_for('inicio')}}>Home</a></li>
-						<li class="active"><span>Usuários</span></li>
-					</ol>
-					<div class="clearfix">
-						<h1 class="pull-left">Usuários</h1>
-						<div class="pull-right top-page-ui">
-							<a href="#" class="btn btn-primary pull-right">
-								<i class="fa fa-plus-circle fa-lg"></i> Adicionar usuário
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>			
-			<div class="row">
-				<div class="col-lg-12">
-										<div class="main-box no-header clearfix">
-											<div class="main-box-body clearfix">
-												<div class="table-responsive">
-													<table class="table user-list table-hover">
-														<thead>
-															<tr>
-																<th><span>Usuário</span></th>
-																<th><span>Criado em</span></th>
-																<th class="text-center"><span>Status</span></th>
-																<th><span>Email</span></th>
-																<th>&nbsp;</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>
-																	<img src="{{ url_for('static', filename='img/samples/user-profile-1.png')}}" alt=""/>
-																	<a href="#" class="user-link">Mila Kunis</a>
-																	<span class="user-subhead">Admin</span>
-																</td>
-																<td>
-																	2013/08/08
-																</td>
-																<td class="text-center">
-																	<span class="label label-default">Inactive</span>
-																</td>
-																<td>
-																	<a href="#"><span class="__cf_email__" data-cfemail="f994909598b9928c97908ad79a9694">[email&nbsp;protected]</span><script type="text/javascript">
-																		/* <![CDATA[ */
-																		(function(){try{var s,a,i,j,r,c,l,b=document.getElementsByTagName("script");l=b[b.length-1].previousSibling;a=l.getAttribute('data-cfemail');if(a){s='';r=parseInt(a.substr(0,2),16);for(j=2;a.length-j;j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}s=document.createTextNode(s);l.parentNode.replaceChild(s,l);}}catch(e){}})();
-																		/* ]]> */
-																	</script></a>
-																</td>
-																<td style="width: 20%;">
-																	<a href="#" class="table-link">
-																		<span class="fa-stack">
-																		<i class="fa fa-square fa-stack-2x"></i>
-																		<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-																		</span>
-																	</a>
-																	<a href="#" class="table-link">
-																		<span class="fa-stack">
-																		<i class="fa fa-square fa-stack-2x"></i>
-																		<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-																		</span>
-																	</a>
-																	<a href="#" class="table-link danger">
-																		<span class="fa-stack">
-																		<i class="fa fa-square fa-stack-2x"></i>
-																		<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-																		</span>
-																	</a>
-																</td>
-															</tr>															
-														</tbody>
-													</table>
-												</div>
-											</div>
-										</div>
-									</div>			
-			</div>
+{% extends "listar.html" %}
+{% block breadcrumb %}
+	<li class="active"><span>USUÁRIOS</span></li>
+{% endblock %}
+
+{% block titulo %}						
+	Usuários <small>do Sistema</small>
+{% endblock %}
+
+{% block scripts %}	
+	{{ super() }}
+	<script type="text/javascript">
+	$( document ).ready(function() {
+    	//$("table>tbody").html('<tr><td>aaaa</td></tr>')
+    	$(".pesquisar").submit(function(e){
+    		e.preventDefault();    		
+    		//var postData = $(this).serialize();
+            var formUrl = $(this).attr('action');                        
+            var query = $(".pesquisar>input:text[name=query]").val();
+            // if ( query == "") {
+            // 	alert('opss! Você esqueceu de digitar algo na pesquisa');
+            // } else {            	
+	            $.ajax({
+	                type : "post",
+	                data : { q:query },
+	                url : formUrl,
+	                success : function(result){
+	                    $("table>tbody").html(result);
+	                },
+	                beforeSend : function(){
+	                    $("table>tbody").html('');
+	                    $("table>tbody").hide();	                    
+	                    $(".loading").show();
+	                }, 
+	                complete : function(msg){                    
+	                    $(".loading").hide();
+	                    $("table>tbody").show();                    
+	                } 
+	            })
+            // }
+    	})
+	});	
+	</script>
+{% endblock %}
+
+{% block list_header %}	
+	<div class="filter-block pull-right">
+		<div class="form-group pull-left">
+			<form action="{{ url_for('.usuario_pesquisar_view') }}" class="pesquisar" method="post">
+				<input name="query" type="text" class="form-control" placeholder="Pesquisar...">
+				<i class="fa fa-search search-icon"></i>
+			</form>
 		</div>
+		<a href="{{ url_for('.usuario_adicionar_view') }}" class="btn btn-primary pull-right">
+			<i class="fa fa-plus-circle fa-lg"></i> Adicionar Usuário
+		</a>
 	</div>
-	
+{% endblock %}
+
+
+	{% block class_table %}table user-list table-hover{% endblock %}
+	{% block cabecalho %}
+		<th><span>Usuário</span></th>
+		<th><span>Criado em</span></th>
+		<th class="text-center"><span>Status</span></th>
+		<th><span>Email</span></th>
+		<th>&nbsp;</th>		
+	{% endblock %}
+	{% block body %}
+		{% for f in dados %} 
+		<tr>
+			<td>
+				{% if f.foto %}				
+					<img src="{{ url_for('static', filename='img/samples/user-profile-1.png')}}" alt=""/>
+				{% endif %}
+				<a href="#" class="user-link">{{f.nome}}</a>
+				<!-- <span class="user-subhead">Admin</span>				 -->
+			</td>
+			<td>				
+				{{f.data_cadastro.strftime('%d/%m/%Y')}}
+			</td>	
+			<td class="text-center">
+				{% if f.ativo %}
+					<span class="label label-success">Ativo</span>
+				{% else %}
+					<span class="label label-default">Inativo</span>
+				{% endif %}
+				
+				
+			</td>
+			<td>
+				{% if f.email %}
+					<a href="mailto:{{f.email}}">
+						{{f.email}}	
+					</a>	
+				{% endif %}			
+			</td>										
+			<td style="width: 15%;">
+				<a href="{{ url_for('.usuario_exibir_view', id=f.id) }}" class="table-link">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+				<a href="{{ url_for('.usuario_editar_view', id=f.id) }}" class="table-link">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+				<a href="{{ url_for('.usuario_deletar_view', id=f.id) }}" class=" table-link danger delete">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>				
+			</td>
+		</tr>
+		{% else %}
+			<tr>
+				<td colspan="3">
+					<div class="alert alert-info">
+						<i class="fa fa-info-circle fa-fw fa-lg"></i>
+						<strong>Nenhum usuário cadastrado!</strong>
+					</div>
+				</td>
+			</tr>				
+		{% endfor %}						
+	{% endblock %}
+
+
+{% block paginacao %}
+	{% if max_page > 1 %} 
+		<li {% if page == 1 %}class="active"{% endif %}>
+            <a href="{{ url_for('.funcionalidade_listar_view', page=1) }}">« Primeira</a>
+        </li>
+        {% for p in pages %}
+        	<li {% if page == p %}class="active"{% endif %}>                                
+                <a href="{{ url_for('.funcionalidade_listar_view', page=p) }}">{{ p }}</a>
+            </li>
+        {% endfor %}
+        	<li {% if page == max_page %}class="active"{% endif %}>
+            	<a href="{{ url_for('.funcionalidade_listar_view', page=max_page) }}">Última »</a>
+           </li>
+    {% endif %}
 {% endblock %}
