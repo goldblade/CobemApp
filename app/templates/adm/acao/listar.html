@@ -1,0 +1,140 @@
+{% extends "listar.html" %}
+{% block breadcrumb %}
+	<li class="active"><span>AÇÕES</span></li>
+{% endblock %}
+
+{% block titulo %}						
+	Ações <small>do Sistema</small>
+{% endblock %}
+
+
+{% block scripts %}	
+	{{ super() }}
+	<script type="text/javascript">
+	$( document ).ready(function() {
+    	//$("table>tbody").html('<tr><td>aaaa</td></tr>')
+    	$(".pesquisar").submit(function(e){
+    		e.preventDefault();    		
+    		//var postData = $(this).serialize();
+            var formUrl = $(this).attr('action');                        
+            var query = $(".pesquisar>input:text[name=query]").val();
+            // if ( query == "") {
+            // 	alert('opss! Você esqueceu de digitar algo na pesquisa');
+            // } else {            	
+	            $.ajax({
+	                type : "post",
+	                data : { q:query },
+	                url : formUrl,
+	                success : function(result){
+	                    $("table>tbody").html(result);
+	                },
+	                beforeSend : function(){
+	                    $("table>tbody").html('');
+	                    $("table>tbody").hide();	                    
+	                    $(".loading").show();
+	                }, 
+	                complete : function(msg){                    
+	                    $(".loading").hide();
+	                    $("table>tbody").show();                    
+	                } 
+	            })
+            // }
+    	})
+	});	
+	</script>
+{% endblock %}
+
+{% block list_header %}
+	<div class="filter-block pull-right">
+		<div class="form-group pull-left">
+			<form action="{{ url_for('.acao_pesquisar_view') }}" class="pesquisar" method="post">
+				<input name="query" type="text" class="form-control" placeholder="Pesquisar...">
+				<i class="fa fa-search search-icon"></i>
+			</form>
+		</div>
+		<a href="{{ url_for('.acao_adicionar_view') }}" class="btn btn-primary pull-right">
+			<i class="fa fa-plus-circle fa-lg"></i> Adicionar Ação
+		</a>
+	</div>
+{% endblock %}
+
+{% block tabela %}
+	{% block cabecalho %}
+		<th><a href="#"><span>Perfil</span></a></th>
+		<th class="text-right"><a href="#" class="asc"><span>Funcionalidade</span></a></th>
+		<th class="text-right">Listar</th>
+		<th class="text-right">Adicionar</th>
+		<th class="text-right">Editar</th>
+		<th class="text-right">Apagar</th>
+		<th>&nbsp;</th>
+	{% endblock %}
+	{% block body %}
+		{% for a in dados %}
+		<tr>
+			<td>
+				{{ a.perfil }}
+			</td>
+			<td class="text-right">
+				{{ a.funcionalidade }}
+			</td>
+			<td style="width: 5%;" class="text-right">
+				{% if a.listar %} <span class="label label-success">Sim</span> {% else %} <span class="label label-danger">Não</span> {% endif %}				
+			</td>
+			<td style="width: 5%;" class="text-right">
+				{% if a.adicionar %} <span class="label label-success">Sim</span> {% else %} <span class="label label-danger">Não</span> {% endif %}
+			</td>
+			<td style="width: 5%;" class="text-right">
+				{% if a.editar %} <span class="label label-success">Sim</span> {% else %} <span class="label label-danger">Não</span> {% endif %}
+			</td>
+			<td style="width: 5%;" class="text-right">
+				{% if a.apagar %} <span class="label label-success">Sim</span> {% else %} <span class="label label-danger">Não</span> {% endif %}
+			</td>
+			<td style="width: 15%;">
+				<a href="{{ url_for('.acao_exibir_view', id=a.id) }}" class="table-link">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+				<a href="{{ url_for('.acao_editar_view', id=a.id) }}" class="table-link">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+				<a href="{{ url_for('.acao_deletar_view', id=a.id) }}" class="table-link danger delete">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+			</td>
+		</tr>
+		{% else %}
+			<tr>
+				<td colspan="7">
+					<div class="alert alert-info">
+						<i class="fa fa-info-circle fa-fw fa-lg"></i>
+						<strong>Nenhuma ação cadastrada!</strong>
+					</div>
+				</td>
+			</tr>				
+		{% endfor %}						
+	{% endblock %}
+{% endblock %}
+
+{% block paginacao %}
+	{% if max_page > 1 %} 
+		<li {% if page == 1 %}class="active"{% endif %}>
+            <a href="{{ url_for('.acao_listar_view', page=1) }}">« Primeira</a>
+        </li>
+        {% for p in pages %}
+        	<li {% if page == p %}class="active"{% endif %}>                                
+                <a href="{{ url_for('.acao_listar_view', page=p) }}">{{ p }}</a>
+            </li>
+        {% endfor %}
+        	<li {% if page == max_page %}class="active"{% endif %}>
+            	<a href="{{ url_for('.acao_listar_view', page=max_page) }}">Última »</a>
+           </li>
+    {% endif %}
+{% endblock %}
