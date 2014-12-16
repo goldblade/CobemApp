@@ -1,0 +1,22 @@
+{% extends "adicionar.html" %}
+{% block breadcrumb %}
+	<li><a href="{{ url_for('.usuario_listar_view') }}">Usuários</a></li>
+	<li class="active"><span>ADICIONAR USUÁRIO</span></li>
+{% endblock %}
+
+{% block titulo %}						
+	Usuários <small>do Sistema</small>
+{% endblock %}
+
+{% block list_header %}Adicionar{% endblock %}
+
+{% block fields %}
+	{% from "_formhelpers.html" import render_field %}
+	{{ render_field(form.nome, placeholder='Nome')}}
+	{{ render_field(form.email, placeholder='Email') }}
+	{{ render_field(form.login, placeholder='Login') }}
+	{{ render_field(form.senha, placeholder='Senha') }}
+	{{ render_field(form.foto, placeholder='Foto') }}
+	{{ render_field(form.perfil, placeholder='Perfil') }}
+	{{ render_field(form.ativo, placeholder='Ativo') }}
+{% endblock %}
