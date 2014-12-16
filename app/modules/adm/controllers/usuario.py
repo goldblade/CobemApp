@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 #from app.modules.auth.controllers import mod
 from . import mod
 from flask.ext.login import login_required
 from flask.ext import login
 from app.modules.adm.models.usuario import Usuario
+from app.modules.adm.forms.usuario import UsuarioForm
 from app.models import paginate
+
 
 @mod.route('/usuario', defaults={'page' : 1})
 @mod.route('/usuario/listar')
@@ -19,7 +21,11 @@ def usuario_listar_view(page):
 @mod.route('/usuario/adicionar', methods=["GET", "POST"])
 @login_required
 def usuario_adicionar_view():
-	return 'adicionar'
+	form = UsuarioForm(request.form)
+	if request.method == 'POST' and form.validate():
+		flash(u'Usuário Inserido com sucesso!', 'success')
+		return redirect(url_for('.usuario_listar_view'))
+	return render_template('adm/usuario/adicionar.html', active_page='adm', user=login.current_user, form=form)
 
 @mod.route('/usuario/editar/id/<int:id>', methods=["GET", "POST"])
 @login_required
