@@ -5,4 +5,6 @@ from pprint import pprint
 from flask import *
 from app import *
 
+db = SQLAlchemy(app)
+
 os.environ['PYTHONINSPECT'] = 'True'

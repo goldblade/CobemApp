@@ -11,4 +11,4 @@ venv*
 cobemapp.db
 .idea
 .idea*
-.idea/*
+.idea/workspace.xml

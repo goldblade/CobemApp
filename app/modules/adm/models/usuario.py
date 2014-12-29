@@ -18,7 +18,7 @@ class Usuario(db.Model):
 	foto = db.Column(db.String(100))
 	email = db.Column(db.String(20), unique=True)
 	login = db.Column(db.String(30), unique=True)
-	senha = db.Column(db.String(15))	
+	senha = db.Column(db.String(100))
 	ativo = db.Column(db.Boolean, default = True)
 	perfis = db.relationship('Perfil', secondary=perfis, backref=db.backref('usuarios', lazy='dynamic'))
 	def set_senha(self, senha):
@@ -41,6 +41,7 @@ class Usuario(db.Model):
 
 	def __unicode__(self):
 		return self.login
+
 
 class Modulo(db.Model):
 	id = db.Column(db.Integer, primary_key=True)

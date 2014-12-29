@@ -63,6 +63,11 @@ def install():
 
 	return "install..."
 
+
+@app.before_first_request
+def initialize_database():
+	db.create_all()
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404
