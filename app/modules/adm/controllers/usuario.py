@@ -7,6 +7,7 @@ from flask.ext import login
 from app.modules.adm.models.usuario import Usuario
 from app.modules.adm.forms.usuario import UsuarioForm
 from app.models import paginate
+from app import db
 
 
 @mod.route('/usuario', defaults={'page' : 1})
@@ -23,8 +24,29 @@ def usuario_listar_view(page):
 def usuario_adicionar_view():
 	form = UsuarioForm(request.form)
 	if request.method == 'POST' and form.validate():
+
+		u = Usuario()
+		u.login = form.login.data
+		u.ativo = form.ativo.data
+		u.email = form.email.data
+		u.foto = form.foto.data
+		u.set_senha(form.senha.data)
+		u.nome = form.nome.data
+		u.perfis = [form.perfil.data]
+
+		try:
+
+			db.session.add(u)
+			db.session.commit()
+
+		except:
+
+			flash(u'Não foi possível inserir o usuário', 'danger')
+
 		flash(u'Usuário Inserido com sucesso!', 'success')
+
 		return redirect(url_for('.usuario_listar_view'))
+
 	return render_template('adm/usuario/adicionar.html', active_page='adm', user=login.current_user, form=form)
 
 @mod.route('/usuario/editar/id/<int:id>', methods=["GET", "POST"])

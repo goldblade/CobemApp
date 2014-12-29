@@ -1,12 +1,13 @@
 import os
-_basedir = os.path.abspath(os.path.dirname(__file__))
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = False
 
 ADMINS = frozenset(['ej@eduardojunior.com'])
 SECRET_KEY = 'SecretKeyForSessionSigning'
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(_basedir, 'cobemapp.db')
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'cobemapp.db')
 DATABASE_CONNECT_OPTIONS = {}
 
 THREADS_PER_PAGE = 8
